@@ -39,10 +39,10 @@ scene.selectAll("a-sphere.starting")
     .data(dataDots)
     .enter()
     .append("a-sphere")
-    .attr("radius", 0.1) // Set a fixed radius for each sphere
+    .attr("radius", 0.2) // Set a fixed radius for each sphere
     // .attr("position", "0 1 -1")
     .attr('position', function(d, i) {
-            let x1PosOffset = i * 15
+            let x1PosOffset = i * 45
             let x1ConvertedAngleToRadians = x1PosOffset * (Math.PI / 180);
             let x1Sine = Math.cos(x1ConvertedAngleToRadians)
             let xPos1 = -10 * x1Sine
@@ -51,7 +51,7 @@ scene.selectAll("a-sphere.starting")
             let yPos1 = i * 4
             let y1 = y_scale(yPos1);
             
-            let z1PosOffset = i * 15
+            let z1PosOffset = i * 45
             let z1ConvertedAngleToRadians = z1PosOffset * (Math.PI / 180);
             let z1Sine = Math.sin(z1ConvertedAngleToRadians)
             let zPos1 = -10 * z1Sine
@@ -65,11 +65,11 @@ scene.selectAll("a-sphere.ending")
     .data(dataDots)
     .enter()
     .append("a-sphere")
-    .attr("radius", 0.1) // Set a fixed radius for each sphere
+    .attr("radius", 0.2) // Set a fixed radius for each sphere
     // .attr("position", "0 1 -1")
     .attr('position', function(d, i) {
 
-            let x2PosOffset = i * 15
+            let x2PosOffset = i * 45
             let x2ConvertedAngleToRadians = x2PosOffset * (Math.PI / 180);
             let x2Sine = Math.cos(x2ConvertedAngleToRadians)
             let xPos2 = 10 * x2Sine
@@ -78,7 +78,7 @@ scene.selectAll("a-sphere.ending")
             let yPos2 = i * 4
             let y2 = y_scale(yPos2);
 
-            let z2PosOffset = i * 15
+            let z2PosOffset = i * 45
             let z2ConvertedAngleToRadians = z2PosOffset * (Math.PI / 180);
             let z2Sine = Math.sin(z2ConvertedAngleToRadians)
             let zPos2 = 10 * z2Sine
@@ -105,25 +105,25 @@ scene.selectAll("a-entity.lollipopstick")
             let yPos2 = i * 4
             let y2 = y_scale(yPos2);
         
-            let x1PosOffset = i * 15
+            let x1PosOffset = i * 45
             let x1ConvertedAngleToRadians = x1PosOffset * (Math.PI / 180);
             let x1Sine = Math.cos(x1ConvertedAngleToRadians)
             let xPos1 = -10 * x1Sine
             let x1 = x_scale(xPos1);
 
-            let x2PosOffset = i * 15
+            let x2PosOffset = i * 45
             let x2ConvertedAngleToRadians = x2PosOffset * (Math.PI / 180);
             let x2Sine = Math.cos(x2ConvertedAngleToRadians)
             let xPos2 = 10 * x2Sine
             let x2 = x_scale(xPos2);
             
-            let z1PosOffset = i * 15
+            let z1PosOffset = i * 45
             let z1ConvertedAngleToRadians = z1PosOffset * (Math.PI / 180);
             let z1Sine = Math.sin(z1ConvertedAngleToRadians)
             let zPos1 = -10 * z1Sine
             let z1 = z_scale(zPos1);
 
-            let z2PosOffset = i * 15
+            let z2PosOffset = i * 45
             let z2ConvertedAngleToRadians = z2PosOffset * (Math.PI / 180);
             let z2Sine = Math.sin(z2ConvertedAngleToRadians)
             let zPos2 = 10 * z2Sine
