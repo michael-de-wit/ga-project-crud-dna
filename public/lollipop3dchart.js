@@ -15,14 +15,12 @@ let scene = d3.select("a-scene")
 // The domain should cover the full range of your data.
 // The range should define the coordinate space in your A-Frame scene.
 const x_scale = d3.scaleLinear()
-    .domain([0, 100])
-    .range([0, 3]);
+    .domain([-100, 100])
+    .range([-3, 3]);
 
-
-
-const y_scale = d3.scaleBand() // Creates band scale x-axis - i.e. maps categorical range to a continuous range
+const y_scale = d3.scaleLinear() // Creates band scale x-axis - i.e. maps categorical range to a continuous range
             .range([1, 5]) // On-screen width
-            .domain(data.map(function (d) { return d.condition; })) // Data-perspective width; as wide as the number of x-axis categories
+            .domain([0, 100]) // Data-perspective width; as wide as the number of x-axis categories
 
 const z_scale = d3.scaleLinear()
     .domain([-100, 100])
@@ -46,7 +44,7 @@ scene.selectAll("a-sphere.starting")
     .attr('position', function(d, i) {
             let x = x_scale(d.xPos1);
             let z = z_scale(0);
-            let y = y_scale(d.condition);
+            // let y = y_scale(d.condition);
             console.log(d,d.condition,y_scale(d.condition),y);
             return x + " " + y + " " + z;
           })
@@ -60,7 +58,7 @@ scene.selectAll("a-sphere.ending")
     // .attr("position", "0 1 -1")
     .attr('position', function(d, i) {
             let x = x_scale(d.xPos2);
-            let y = y_scale(d.condition);
+            // let y = y_scale(d.condition);
             let z = z_scale(0);
             console.log(d,d.condition,y_scale(d.condition),y);
             return `${x} ${y} ${z}`;
@@ -80,41 +78,39 @@ scene.selectAll("a-entity.lollipopstick")
 .append("a-entity")
     // .attr("line","start: 0 1 -1; end: 2 2 -2; color: black")
     .attr("line", function(d, i) {
-            let x1 = x_scale(d.xPos1)
-            let z1 = z_scale(0);
-            let y1 = y_scale(d.condition);
-            let y2 = y_scale(d.condition);
-            
-            // let xPosOffset = i * 45
-            // let xConvertedAngleToRadians = xPosOffset * (Math.PI / 180);
-            // let xSine = Math.sin(xConvertedAngleToRadians)
-            // let xPos2 = 50 * xSine
-            
-            let xPosOffset = i * 45
-            console.log(`xPosOffset`, xPosOffset);
-            let xConvertedAngleToRadians = xPosOffset * (Math.PI / 180);
-            console.log(`convertedAngleToRadians`, xConvertedAngleToRadians);
-            let xSine = Math.cos(xConvertedAngleToRadians)
-            console.log(`zSine`, xSine);
-            let xPos2 = 50 * xSine
-            console.log(`xPos2`, xPos2);
+        
+            let yPos1 = i * 10
+            let y1 = y_scale(yPos1);
+        
+            let yPos2 = i * 10
+            let y2 = y_scale(yPos2);
+        
+            let x1PosOffset = i * 15
+            let x1ConvertedAngleToRadians = x1PosOffset * (Math.PI / 180);
+            let x1Sine = Math.cos(x1ConvertedAngleToRadians)
+            let xPos1 = -50 * x1Sine
+            let x1 = x_scale(xPos1);
+
+            let x2PosOffset = i * 15
+            let x2ConvertedAngleToRadians = x2PosOffset * (Math.PI / 180);
+            let x2Sine = Math.cos(x2ConvertedAngleToRadians)
+            let xPos2 = 50 * x2Sine
             let x2 = x_scale(xPos2);
-            console.log(`x2`, x2);
             
-            let zPosOffset = i * 45
-            console.log(`zPosOffset`, zPosOffset);
-            let convertedAngleToRadians = zPosOffset * (Math.PI / 180);
-            console.log(`convertedAngleToRadians`, convertedAngleToRadians);
-            let zSine = Math.sin(convertedAngleToRadians)
-            console.log(`zSine`, zSine);
-            let zPos2 = 50 * zSine
-            console.log(`zPos2`, zPos2);
+            let z1PosOffset = i * 15
+            let z1ConvertedAngleToRadians = z1PosOffset * (Math.PI / 180);
+            let z1Sine = Math.sin(z1ConvertedAngleToRadians)
+            let zPos1 = -50 * z1Sine
+            let z1 = z_scale(zPos1);
+
+            let z2PosOffset = i * 15
+            let z2ConvertedAngleToRadians = z2PosOffset * (Math.PI / 180);
+            let z2Sine = Math.sin(z2ConvertedAngleToRadians)
+            let zPos2 = 50 * z2Sine
             let z2 = z_scale(zPos2);
-            console.log(`z2`, z2);
-            // zPosOffset = zPosOffset + 45
-            // console.log(`start: ${x1} ${y1} ${z1}; end: ${x2} ${y2} ${z2}; color: black; z2: ${z2}; zPosOffset: ${zPosOffset}`);
-            // console.log(`zPos2: ${zPos2}, z2: ${z2}; zPosOffset: ${zPosOffset}`);
-            
+
+            console.log(`start: ${x1} ${y1} ${z1}; end: ${x2} ${y2} ${z2}; color: black`);
+
             return `start: ${x1} ${y1} ${z1}; end: ${x2} ${y2} ${z2}; color: black`
         })
 
