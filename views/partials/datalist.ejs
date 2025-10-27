@@ -3,7 +3,7 @@
         <% for (const [index, dataPoint] of dataPoints.entries()) { %>
             <li> 
                 <a href="/<%= dataPoint._id %>">
-                    <%= dataPoint.condition %>: <%= dataPoint.xPos1 %> - <%= dataPoint.xPos2 %> 
+                    <%= dataPoint.templateNucleotide %>:<%= dataPoint.codingNucleotide %>
                 </a>
             </li>
         <% } %>

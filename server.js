@@ -21,44 +21,44 @@ const path = require('path'); // Set up public folder
 app.use(express.static('public'));
 
 // Schema
-const conditionStateComparisonData = require(`./models/conditions.js`) // use this MongoDB schema
+const nucleotidePairData = require(`./models/nucleotide.js`) // use this MongoDB schema
 
 // Connections
 app.get (`/`, async (req, res) => { // GET request for the index route
-    const allData = await conditionStateComparisonData.find()
+    const allData = await nucleotidePairData.find()
     res.render(`home.ejs`, {
         dataPoints: allData,
     })
 })
 
 app.post(`/`, async (req, res) => { // POST request to the fruits new route (i.e. not a get request)
-    await conditionStateComparisonData.create(req.body)
+    await nucleotidePairData.create(req.body)
     
     res.redirect(`/`) // redirect to the GET fruits index route after the post fruits processing has run
     
 })
 
 app.get(`/new`, async (req, res) => {
-    const allData = await conditionStateComparisonData.find()
+    const allData = await nucleotidePairData.find()
     res.render(`new.ejs` , {
         dataPoints: allData,
     })
 })
 
 app.put(`/:dataPointId`, async (req, res) => { // need a form for a put request
-    await conditionStateComparisonData.findByIdAndUpdate(req.params.dataPointId, req.body)
+    await nucleotidePairData.findByIdAndUpdate(req.params.dataPointId, req.body)
     res.redirect(`/`)
 })
 
 app.delete(`/:dataPointId`, async (req, res) => { // DELETE request
-    await conditionStateComparisonData.findByIdAndDelete(req.params.dataPointId)
+    await nucleotidePairData.findByIdAndDelete(req.params.dataPointId)
     res.redirect(`/`)
 
 })
 
 app.get(`/:dataPointId`, async (req, res) => { // GET request for show route
-    const allData = await conditionStateComparisonData.find()
-    const foundDataPoint = await conditionStateComparisonData.findById(req.params.dataPointId)
+    const allData = await nucleotidePairData.find()
+    const foundDataPoint = await nucleotidePairData.findById(req.params.dataPointId)
     res.render(`show.ejs` , {
         dataPoint: foundDataPoint,
         dataPoints: allData,
