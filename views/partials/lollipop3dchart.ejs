@@ -1,0 +1,19 @@
+<a-scene id="3d-scatter-plot" embedded>
+    <!-- Camera set up from: https://claude.ai/chat/1ca4def1-b7d7-4ea6-b109-4e75ed1de386 -->
+    <a-entity id="rig" movement-controls="fly: true">
+        <a-entity camera position="2 2 1.5" look-controls wasd-controls="acceleration: 20" rotation="-90 90 -180"></a-entity>
+    </a-entity>
+    <a-sky color="#ECECEC"></a-sky>></a-sky>
+</a-scene>
+
+<script id="dataArrayDots" type="application/json">
+    [
+    {"condition": "Condition1", "xPos": 11, "yPos": 90, "zPos": 40},
+    {"condition": "Condition2", "xPos": 41, "yPos": 20, "zPos": 30},
+    {"condition": "Condition3", "xPos": 91, "yPos": 90, "zPos": 10},
+    {"condition": "Condition4", "xPos": 0, "yPos": 0, "zPos": 0},
+    {"condition": "Condition5", "xPos": 50, "yPos": 50, "zPos": 50}
+    ]
+</script>
+
+<script defer src="/lollipop3dchart.js"></script>

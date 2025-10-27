@@ -1,0 +1,12 @@
+<form action="/<%= dataPoint._id %>?_method=PUT" method="POST">
+    <label>Condition:</label>
+    <input name="condition" type="text" value="<%= dataPoint.condition %>"/>
+    <label>X1-position (0-100):</label>
+    <input name="xPos1" type="number" min="0" max="120" value="<%= dataPoint.xPos1 %>"/>
+    <label>X2-position (0-100):</label>
+    <input name="xPos2" type="number" min="0" max="120" value="<%= dataPoint.xPos2 %>"/>
+    <button type="submit">Update</button>
+</form>
+<form action="/<%= dataPoint._id %>?_method=DELETE" method="POST">
+    <button type="submit">Delete</button>
+</form>

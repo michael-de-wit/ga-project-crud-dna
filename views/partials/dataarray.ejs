@@ -1,0 +1,12 @@
+<div id="dataArray">
+    <p> [
+    <% for (const [index, dataPoint] of dataPoints.entries()) { %> <!-- Loop through dataPoints to clean up the object format -->
+        <% if(index + 1 != dataPoints.length) { %> <!-- Add a comma after each object unless it's the last object -->
+           {"condition": "<%= dataPoint.condition %>", "xPos1": <%= dataPoint.xPos1 %>, "xPos2": <%= dataPoint.xPos2 %>},
+        <% } else { %> <!-- This should only apply to the last object -- excludes the comma afterwards -->
+           {"condition": "<%= dataPoint.condition %>", "xPos1": <%= dataPoint.xPos1 %>, "xPos2": <%= dataPoint.xPos2 %>}
+        <% } %>
+    <% } %>
+        ]
+    </p>
+</div>
