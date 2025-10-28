@@ -2,8 +2,6 @@ const nucleotideMatchCheckbox = document.querySelector(`#nucleotideMatchCheckbox
 const templateNucleotide = document.querySelectorAll(`.templateNucleotide`)
 const codingNucleotide = document.querySelectorAll(`.codingNucleotide`)
 
-console.log(codingNucleotide);
-
 let RadioCodingNucleotideG = document.querySelector('input[id="codingNucleotideG"]');
 let RadioCodingNucleotideC = document.querySelector('input[id="codingNucleotideC"]');
 let RadioCodingNucleotideA = document.querySelector('input[id="codingNucleotideA"]');
@@ -27,7 +25,6 @@ nucleotideMatchCheckbox.addEventListener('change', () => {
 templateNucleotide.forEach(radioButton => {
     radioButton.addEventListener('change', () => {
     const selectedRadioTemplateNucleotide = document.querySelector('input[name="templateNucleotide"]:checked');
-    console.log(selectedRadioTemplateNucleotide);
 
     if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'G') {
         RadioCodingNucleotideC.checked = true
@@ -44,7 +41,6 @@ templateNucleotide.forEach(radioButton => {
 codingNucleotide.forEach(radioButton => {
     radioButton.addEventListener('change', () => {
     const selectedRadioTemplateNucleotide = document.querySelector('input[name="templateNucleotide"]:checked');
-    console.log(selectedRadioTemplateNucleotide);
 
     if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'G') {
         RadioCodingNucleotideC.checked = true

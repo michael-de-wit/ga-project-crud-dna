@@ -1,7 +1,7 @@
 // Load the data from the script tag
 const dataArrayForLollipop3dAsString = document.getElementById('dataArray').innerText;
 const dataDots = JSON.parse(dataArrayForLollipop3dAsString);
-// console.log(dataDots);
+console.log(dataDots);
 
 // Select the A-Frame scene
 let scene = d3.select("a-scene")
@@ -59,7 +59,18 @@ scene.selectAll("a-sphere.starting")
 
             return `${x1} ${y1} ${z1}`;
           })
-    .attr("color", "green");
+    .attr("color", function(d, i) {
+        if (d.templateNucleotide === 'G') {
+            return "#587156"
+        } else if (d.templateNucleotide === 'C') {
+            return "#B62E3B"
+        } else if (d.templateNucleotide === 'A') {
+            return "#AFA77B"
+        } else if (d.templateNucleotide === 'T') {
+            return "#EAC6E6"
+        }
+        
+    });
 
 scene.selectAll("a-sphere.ending")
     .data(dataDots)
@@ -87,7 +98,17 @@ scene.selectAll("a-sphere.ending")
             return `${x2} ${y2} ${z2}`;
             
         })
-    .attr("color", "purple");
+    .attr("color", function(d, i) {
+        if (d.templateNucleotide === 'G') {
+            return "#587156"
+        } else if (d.templateNucleotide === 'C') {
+            return "#B62E3B"
+        } else if (d.templateNucleotide === 'A') {
+            return "#AFA77B"
+        } else if (d.templateNucleotide === 'T') {
+            return "#EAC6E6"
+        }
+    });
 
 // let zPosOffset = 0
 
