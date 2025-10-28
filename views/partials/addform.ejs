@@ -1,10 +1,38 @@
 <form action="/" method="POST">
     <label> Nucleotide position:</label>
     <input name="nucleotidePosition" type="Number" value="<%= maxPosition + 1 %>" readonly/>
+
     <label>Template nucleotide:</label>
-    <input name="templateNucleotide" type="text" value="n/a"/>
+    <fieldset id="templateNucleotideFieldSet">
+        <input id="templateNucleotideG" class="templateNucleotide" name="templateNucleotide" type="radio" value="G"/>
+        <label for="templateNucleotideG">G</label>
+        
+        <input id="templateNucleotideC" class="templateNucleotide" name="templateNucleotide" type="radio" value="C"/>
+        <label for="templateNucleotideC">C</label>
+        
+        <input id="templateNucleotideA" class="templateNucleotide" name="templateNucleotide" type="radio" value="A"/>
+        <label for="templateNucleotideA">A</label>
+        
+        <input id="templateNucleotideT" class="templateNucleotide" name="templateNucleotide" type="radio" value="T"/>
+        <label for="templateNucleotideT">T</label>
+    </fieldset>
+    
     <label>Coding nucleotide:</label>
-    <input id="codingNucleotideInput" name="codingNucleotide" type="text" value="n/a" readonly/>
+    <fieldset>
+        <input id="codingNucleotideG" class="codingNucleotide" name="codingNucleotide" type="radio" value="G"/>
+        <label for="codingNucleotideInputG">G</label>
+        
+        <input id="codingNucleotideC" class="codingNucleotide" name="codingNucleotide" type="radio" value="C"/>
+        <label for="codingNucleotideInputC">C</label>
+        
+        <input id="codingNucleotideA" class="codingNucleotide" name="codingNucleotide" type="radio" value="A"/>
+        <label for="codingNucleotideInputA">A</label>
+        
+        <input id="codingNucleotideT" class="codingNucleotide" name="codingNucleotide" type="radio" value="T"/>
+        <label for="codingNucleotideInputT">T</label>
+
+    </fieldset>
+    
     <label> Nucleotide match?:</label>
     <input id="nucleotideMatchCheckbox" name="nucleotideMatch" type="checkbox" checked/>
     
