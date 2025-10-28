@@ -1,8 +1,12 @@
 <form action="/" method="POST">
+    <label> Nucleotide position:</label>
+    <input name="nucleotidePosition" type="Number" value="<%= maxPosition + 1 %>" readonly/>
     <label>Template nucleotide:</label>
     <input name="templateNucleotide" type="text" value="n/a"/>
     <label>Coding nucleotide:</label>
-    <input name="codingNucleotide" type="text" value="n/a"/>
+    <input id="codingNucleotideInput" name="codingNucleotide" type="text" value="n/a" readonly/>
+    <label> Nucleotide match?:</label>
+    <input id="nucleotideMatchCheckbox" name="nucleotideMatch" type="checkbox" checked/>
     
     <button type="submit">Add data point</button>
 </form>

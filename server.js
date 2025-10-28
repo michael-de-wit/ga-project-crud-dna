@@ -26,12 +26,18 @@ const nucleotidePairData = require(`./models/nucleotide.js`) // use this MongoDB
 // Connections
 app.get (`/`, async (req, res) => { // GET request for the index route
     const allData = await nucleotidePairData.find()
+    
     res.render(`home.ejs`, {
-        dataPoints: allData,
+        dataPoints: allData
     })
 })
 
 app.post(`/`, async (req, res) => { // POST request to the fruits new route (i.e. not a get request)
+    if(req.body.nucleotideMatch === 'on') {
+        req.body.nucleotideMatch = true;
+    } else {
+        req.body.nucleotideMatch = false;
+    }
     await nucleotidePairData.create(req.body)
     
     res.redirect(`/`) // redirect to the GET fruits index route after the post fruits processing has run
@@ -40,8 +46,20 @@ app.post(`/`, async (req, res) => { // POST request to the fruits new route (i.e
 
 app.get(`/new`, async (req, res) => {
     const allData = await nucleotidePairData.find()
+
+    // console.log(allData);
+
+    // Determine the max nucleotide position out of all the pairs
+    let maxPosition = 0
+    for (const pair of allData) {
+        if (pair.nucleotidePosition > maxPosition) {
+            maxPosition = pair.nucleotidePosition;
+        }
+    }
+
     res.render(`new.ejs` , {
         dataPoints: allData,
+        maxPosition: maxPosition
     })
 })
 

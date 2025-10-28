@@ -1,7 +1,7 @@
 // Load the data from the script tag
 const dataArrayForLollipop3dAsString = document.getElementById('dataArray').innerText;
 const dataDots = JSON.parse(dataArrayForLollipop3dAsString);
-console.log(dataDots);
+// console.log(dataDots);
 
 // Select the A-Frame scene
 let scene = d3.select("a-scene")
@@ -16,7 +16,7 @@ let scene = d3.select("a-scene")
 // The range should define the coordinate space in your A-Frame scene.
 const x_scale = d3.scaleLinear()
     .domain([-100, 100])
-    .range([-3, 3]);
+    .range([-5, 5]);
 
 const y_scale = d3.scaleLinear() // Creates band scale x-axis - i.e. maps categorical range to a continuous range
             .range([1, 5]) // On-screen width
@@ -129,7 +129,7 @@ scene.selectAll("a-entity.lollipopstick")
             let zPos2 = 10 * z2Sine
             let z2 = z_scale(zPos2);
 
-            console.log(`start: ${x1} ${y1} ${z1}; end: ${x2} ${y2} ${z2}; color: black`);
+            // console.log(`start: ${x1} ${y1} ${z1}; end: ${x2} ${y2} ${z2}; color: black`);
 
             return `start: ${x1} ${y1} ${z1}; end: ${x2} ${y2} ${z2}; color: black`
         })
