@@ -33,9 +33,15 @@ app.get (`/`, async (req, res) => { // GET request for the index route
 })
 
 app.post(`/`, async (req, res) => { // POST request to the fruits new route (i.e. not a get request)
-    
+    console.log(`req.body`, req.body);
     // Re-cast data type for checkbox on->true, null->false to expected DB boolean data type
     if(req.body.nucleotideMatch === 'on') {
+        req.body.nucleotideMatch = true;
+    } else if ((req.body.templateNucleotide === "G" && req.body.codingNucleotide === "C") ||
+               (req.body.templateNucleotide === "C" && req.body.codingNucleotide === "G") ||
+               (req.body.templateNucleotide === "A" && req.body.codingNucleotide === "T") ||
+               (req.body.templateNucleotide === "T" && req.body.codingNucleotide === "A")
+            ) {
         req.body.nucleotideMatch = true;
     } else {
         req.body.nucleotideMatch = false;
@@ -140,7 +146,7 @@ app.put(`/:dataPointId`, async (req, res) => { // need a form for a put request
     } else {
         console.log(`No overlap position found`);
     }
-    
+
     await nucleotidePairData.create(allData)
     
     await nucleotidePairData.findByIdAndUpdate(req.params.dataPointId, req.body)

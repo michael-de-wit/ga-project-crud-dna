@@ -1,7 +1,7 @@
 <form action="/" method="POST">
     
     <label> Nucleotide position:</label>
-    <input name="nucleotidePosition" type="Number" value="<%= maxPosition + 1 %>"/>
+    <input name="nucleotidePosition" type="Number" value="<%= maxPosition + 1 %>" max="<%= maxPosition + 1 %>"/>
 
     <label>Template nucleotide:</label>
     <fieldset id="templateNucleotideFieldSet">
