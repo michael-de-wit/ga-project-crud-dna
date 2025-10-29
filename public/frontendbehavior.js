@@ -7,54 +7,56 @@ let RadioCodingNucleotideC = document.querySelector('input[id="codingNucleotideC
 let RadioCodingNucleotideA = document.querySelector('input[id="codingNucleotideA"]'); // The Coding nucleotide element with A selected
 let RadioCodingNucleotideT = document.querySelector('input[id="codingNucleotideT"]'); // The Coding nucleotide element with T selected
 
-//If the user checks Nucleotide match?, then update the Coding nucleotide to match the selected Template nucleotide
-nucleotideMatchCheckbox.addEventListener('change', () => { // When the user selects/deselects the Nucleotide match? checkbox
-    const selectedRadioTemplateNucleotide = document.querySelector('input[name="templateNucleotide"]:checked'); // Get the Template nucleotide radio button that is currently selected
-    
-    // If Nucleotide match? is checked and the selected Template nucleotide is G<>C or A<>T, then change the Coding nucleotide selection to the matching nucleotide
-    if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'G') {
-        RadioCodingNucleotideC.checked = true
-    } else if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'C') {
-        RadioCodingNucleotideG.checked = true
-    } else if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'A') {
-        RadioCodingNucleotideT.checked = true
-    } else if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'T') {
-        RadioCodingNucleotideA.checked = true
-    }
-})
+if (nucleotideMatchCheckbox !== null) { // Since the html header is shared by all pages, this file is called from all pages; not all pages have the same elements; this checks to see if the element(s) are available, e.g. the Match checkbox
+    //If the user checks Nucleotide match?, then update the Coding nucleotide to match the selected Template nucleotide
+    nucleotideMatchCheckbox.addEventListener('change', () => { // When the user selects/deselects the Nucleotide match? checkbox
+        const selectedRadioTemplateNucleotide = document.querySelector('input[name="templateNucleotide"]:checked'); // Get the Template nucleotide radio button that is currently selected
 
-// If the Nucleotide match? checkbox is checked, then when the user makes a Template nucleotide selection, select the matching Coding nucleotide
-templateNucleotide.forEach(radioButton => { // When the user selects a Template nucleotide radio button
-    radioButton.addEventListener('change', () => {
-    const selectedRadioTemplateNucleotide = document.querySelector('input[name="templateNucleotide"]:checked'); // Get the Template nucleotide radio button that is currently selected
-
-    // If Nucleotide match? is checked and the selected Template nucleotide is G<>C or A<>T, then change the Coding nucleotide selection to the matching nucleotide
-    if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'G') {
-        RadioCodingNucleotideC.checked = true
-    } else if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'C') {
-        RadioCodingNucleotideG.checked = true
-    } else if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'A') {
-        RadioCodingNucleotideT.checked = true
-    } else if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'T') {
-        RadioCodingNucleotideA.checked = true
-    }
+        // If Nucleotide match? is checked and the selected Template nucleotide is G<>C or A<>T, then change the Coding nucleotide selection to the matching nucleotide
+        if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'G') {
+            RadioCodingNucleotideC.checked = true
+        } else if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'C') {
+            RadioCodingNucleotideG.checked = true
+        } else if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'A') {
+            RadioCodingNucleotideT.checked = true
+        } else if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'T') {
+            RadioCodingNucleotideA.checked = true
+        }
     })
-})
 
-// If the Nucleotide match? checkbox is checked, then when the user tries to make a Coding nucleotide selection, keep the selection as the match to the Template nucleotide
-codingNucleotide.forEach(radioButton => { // When the user selects a Coding nucleotide radio button
-    radioButton.addEventListener('change', () => {
-    const selectedRadioTemplateNucleotide = document.querySelector('input[name="templateNucleotide"]:checked'); // Get the Template nucleotide radio button that is currently selected
+    // If the Nucleotide match? checkbox is checked, then when the user makes a Template nucleotide selection, select the matching Coding nucleotide
+    templateNucleotide.forEach(radioButton => { // When the user selects a Template nucleotide radio button
+        radioButton.addEventListener('change', () => {
+            const selectedRadioTemplateNucleotide = document.querySelector('input[name="templateNucleotide"]:checked'); // Get the Template nucleotide radio button that is currently selected
 
-    // If Nucleotide match? is checked and the selected Template nucleotide is G<>C or A<>T, then change the Coding nucleotide selection to the matching nucleotide
-    if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'G') {
-        RadioCodingNucleotideC.checked = true
-    } else if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'C') {
-        RadioCodingNucleotideG.checked = true
-    } else if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'A') {
-        RadioCodingNucleotideT.checked = true
-    } else if(nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'T') {
-        RadioCodingNucleotideA.checked = true
-    }
+            // If Nucleotide match? is checked and the selected Template nucleotide is G<>C or A<>T, then change the Coding nucleotide selection to the matching nucleotide
+            if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'G') {
+                RadioCodingNucleotideC.checked = true
+            } else if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'C') {
+                RadioCodingNucleotideG.checked = true
+            } else if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'A') {
+                RadioCodingNucleotideT.checked = true
+            } else if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'T') {
+                RadioCodingNucleotideA.checked = true
+            }
+        })
     })
-})
+
+    // If the Nucleotide match? checkbox is checked, then when the user tries to make a Coding nucleotide selection, keep the selection as the match to the Template nucleotide
+    codingNucleotide.forEach(radioButton => { // When the user selects a Coding nucleotide radio button
+        radioButton.addEventListener('change', () => {
+            const selectedRadioTemplateNucleotide = document.querySelector('input[name="templateNucleotide"]:checked'); // Get the Template nucleotide radio button that is currently selected
+
+            // If Nucleotide match? is checked and the selected Template nucleotide is G<>C or A<>T, then change the Coding nucleotide selection to the matching nucleotide
+            if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'G') {
+                RadioCodingNucleotideC.checked = true
+            } else if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'C') {
+                RadioCodingNucleotideG.checked = true
+            } else if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'A') {
+                RadioCodingNucleotideT.checked = true
+            } else if (nucleotideMatchCheckbox.checked === true && selectedRadioTemplateNucleotide.value == 'T') {
+                RadioCodingNucleotideA.checked = true
+            }
+        })
+    })
+}

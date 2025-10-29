@@ -33,13 +33,54 @@ app.get (`/`, async (req, res) => { // GET request for the index route
 })
 
 app.post(`/`, async (req, res) => { // POST request to the fruits new route (i.e. not a get request)
+    
+    // Re-cast data type for checkbox on->true, null->false to expected DB boolean data type
     if(req.body.nucleotideMatch === 'on') {
         req.body.nucleotideMatch = true;
     } else {
         req.body.nucleotideMatch = false;
     }
-    await nucleotidePairData.create(req.body)
+
+    // Add date added time stamp to new entry
+    req.body.dateAdded =Date()
+
+    // Check for overlapping position values, i.e. an inserted entry
+    // Save the added nucleotide pair position, i.e. the position to insert the pair into
+    const addedNucleotidePosition = Number(req.body.nucleotidePosition)
+    console.log(addedNucleotidePosition);
     
+    // Get all the data prior to the new entry being added
+    const allData = await nucleotidePairData.find()
+
+    // Get all the positions from the data prior to the new entry being added
+    const preAddAllDataPositionArray = allData.map(entry => entry.nucleotidePosition)
+    console.log(preAddAllDataPositionArray); 
+
+    // Check to see if the added position / insert position already exists; i.e. if there is an overlapping position
+    if(preAddAllDataPositionArray.includes(addedNucleotidePosition)) {
+        console.log(`Overlap position found`);
+        // If the inserted position overlaps with an existing position, increment the pre-existing overlapping position and all subsequent positions by 1 to make space for the inserted position
+        // e.g. If we already have entries for Positions 1,2,3,4 and we want to insert an entry into position 2; the old positions update like: 1, 2+1, 3+1, 4+1
+        // Which results in the positions 1, 2 (new 2), 3 (old 2), 4 (old 3), 5 (old 4)
+        allData.forEach((entry, index) => {
+            console.log(`pre incr entry.nucleotidePosition, ${entry.nucleotidePosition}`);
+            // For the old positions which are greater than or equal to the inserted position
+            if(entry.nucleotidePosition >= addedNucleotidePosition) {
+                // Increment their positions by 1
+                entry.nucleotidePosition = entry.nucleotidePosition + 1
+            }
+            console.log(`post incr entry.nucleotidePosition, ${entry.nucleotidePosition}`);
+        })
+    } else {
+        console.log(`No overlap position found`);
+    }
+    
+    // Update the pre-add data with their updated positions
+    await nucleotidePairData.create(allData)
+    
+    // Add the new entry with its insert position
+    await nucleotidePairData.create(req.body)
+
     res.redirect(`/`) // redirect to the GET fruits index route after the post fruits processing has run
     
 })
