@@ -115,7 +115,7 @@ app.put(`/:dataPointId`, async (req, res) => { // need a form for a put request
     // console.log(`modifiedNucleotidePosition`, modifiedNucleotidePosition);
 
     // Get all the data prior to modifying the entry
-    const allData = await nucleotidePairData.find()
+    let allData = await nucleotidePairData.find()
     // console.log(`1 allData`, allData); 
 
     // Get all the positions from the data prior to the new entry being added
@@ -141,7 +141,11 @@ app.put(`/:dataPointId`, async (req, res) => { // need a form for a put request
         console.log(`No overlap position found`);
     }
     
+    await nucleotidePairData.create(allData)
+    
     await nucleotidePairData.findByIdAndUpdate(req.params.dataPointId, req.body)
+
+    allData = await nucleotidePairData.find()
 
     //Re-sort the entries by position (may still have a gap)
     console.log(`pre allData`, allData);
