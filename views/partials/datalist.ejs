@@ -1,5 +1,7 @@
 <div>
     <ul>
+    <% // Sorts dataDots by nucleotidePosition using array's sort method -- so that the graphic will render in order of nucleotide position %>
+    <% dataPoints.sort((entry1, entry2) => entry1.nucleotidePosition - entry2.nucleotidePosition); %>
         <% for (const [index, dataPoint] of dataPoints.entries()) { %>
             <li> 
                 <a href="/<%= dataPoint._id %>">

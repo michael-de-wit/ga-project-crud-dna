@@ -47,14 +47,14 @@ app.post(`/`, async (req, res) => { // POST request to the fruits new route (i.e
     // Check for overlapping position values, i.e. an inserted entry
     // Save the added nucleotide pair position, i.e. the position to insert the pair into
     const addedNucleotidePosition = Number(req.body.nucleotidePosition)
-    console.log(addedNucleotidePosition);
+    // console.log(addedNucleotidePosition);
     
     // Get all the data prior to the new entry being added
     const allData = await nucleotidePairData.find()
 
     // Get all the positions from the data prior to the new entry being added
     const preAddAllDataPositionArray = allData.map(entry => entry.nucleotidePosition)
-    console.log(preAddAllDataPositionArray); 
+    // console.log(preAddAllDataPositionArray); 
 
     // Check to see if the added position / insert position already exists; i.e. if there is an overlapping position
     if(preAddAllDataPositionArray.includes(addedNucleotidePosition)) {
@@ -63,13 +63,13 @@ app.post(`/`, async (req, res) => { // POST request to the fruits new route (i.e
         // e.g. If we already have entries for Positions 1,2,3,4 and we want to insert an entry into position 2; the old positions update like: 1, 2+1, 3+1, 4+1
         // Which results in the positions 1, 2 (new 2), 3 (old 2), 4 (old 3), 5 (old 4)
         allData.forEach((entry, index) => {
-            console.log(`pre incr entry.nucleotidePosition, ${entry.nucleotidePosition}`);
+            // console.log(`pre incr entry.nucleotidePosition, ${entry.nucleotidePosition}`);
             // For the old positions which are greater than or equal to the inserted position
             if(entry.nucleotidePosition >= addedNucleotidePosition) {
                 // Increment their positions by 1
                 entry.nucleotidePosition = entry.nucleotidePosition + 1
             }
-            console.log(`post incr entry.nucleotidePosition, ${entry.nucleotidePosition}`);
+            // console.log(`post incr entry.nucleotidePosition, ${entry.nucleotidePosition}`);
         })
     } else {
         console.log(`No overlap position found`);

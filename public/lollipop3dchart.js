@@ -1,7 +1,11 @@
 // Load the data from the script tag
 const dataArrayForLollipop3dAsString = document.getElementById('dataArray').innerText;
 const dataDots = JSON.parse(dataArrayForLollipop3dAsString);
-console.log(dataDots);
+// console.log(`pre-sort`, dataDots);
+
+// Sorts dataDots by nucleotidePosition using array's sort method -- so that the graphic will render in order of nucleotide position
+dataDots.sort((entry1, entry2) => entry1.nucleotidePosition - entry2.nucleotidePosition);
+// console.log(`post-sort`, dataDots);
 
 // Select the A-Frame scene
 let scene = d3.select("a-scene")
