@@ -1,7 +1,7 @@
 <form action="/<%= dataPoint._id %>?_method=PUT" method="POST">
 
     <label> Nucleotide position:</label>
-    <input name="nucleotidePosition" type="Number" value="<%= dataPoint.nucleotidePosition %>"/>
+    <input name="nucleotidePosition" type="Number" value="<%= dataPoint.nucleotidePosition %>" max="<%= maxPosition %>"/>
 
     <label>Template nucleotide:</label>
     <fieldset id="templateNucleotideFieldSet">

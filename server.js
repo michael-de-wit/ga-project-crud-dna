@@ -106,9 +106,58 @@ app.get(`/new`, async (req, res) => {
 
 app.put(`/:dataPointId`, async (req, res) => { // need a form for a put request
 
-    req.body.dateModified =Date()
+    // Create data modified timestamp to updated entry
+    req.body.dateModified = Date()
 
+    // Check for overlapping position values, i.e. an inserted entry
+    // Save the updated nucleotide pair position, i.e. the position to insert the pair into
+    const modifiedNucleotidePosition = Number(req.body.nucleotidePosition)
+    // console.log(`modifiedNucleotidePosition`, modifiedNucleotidePosition);
+
+    // Get all the data prior to modifying the entry
+    const allData = await nucleotidePairData.find()
+    // console.log(`1 allData`, allData); 
+
+    // Get all the positions from the data prior to the new entry being added
+    const preModifyAllDataPositionArray = allData.map(entry => entry.nucleotidePosition)
+    // console.log(`2 preModifyAllDataPositionArray`, preModifyAllDataPositionArray); 
+
+    // Check to see if the updated position already exists; i.e. if there is an overlapping position
+    if(preModifyAllDataPositionArray.includes(modifiedNucleotidePosition)) {
+        console.log(`Overlap position found`);
+        // If the inserted position overlaps with an existing position, increment the pre-existing overlapping position and all subsequent positions by 1 to make space for the inserted position
+        // e.g. If we already have entries for Positions 1,2,3,4 and we want to insert an entry into position 2; the old positions update like: 1, 2+1, 3+1, 4+1
+        // Which results in the positions 1, 2 (new 2), 3 (old 2), 4 (old 3), 5 (old 4)
+        allData.forEach((entry, index) => {
+            // console.log(`pre incr entry.nucleotidePosition, ${entry.nucleotidePosition}`);
+            // For the old positions which are greater than or equal to the inserted position
+            if(entry.nucleotidePosition >= modifiedNucleotidePosition) {
+                // Increment their positions by 1
+                entry.nucleotidePosition = entry.nucleotidePosition + 1
+            }
+            // console.log(`post incr entry.nucleotidePosition, ${entry.nucleotidePosition}`);
+        })
+    } else {
+        console.log(`No overlap position found`);
+    }
+    
     await nucleotidePairData.findByIdAndUpdate(req.params.dataPointId, req.body)
+
+    //Re-sort the entries by position (may still have a gap)
+    console.log(`pre allData`, allData);
+    allData.sort((entry1, entry2) => entry1.nucleotidePosition - entry2.nucleotidePosition)
+    console.log(`post allData`, allData);
+
+    // Check for gaps in positioning and re-orient
+    allData.forEach((entry, index) => {
+        console.log('pre entry.nucleotidePosition', entry.nucleotidePosition);
+        entry.nucleotidePosition = index + 1
+        console.log('post entry.nucleotidePosition', entry.nucleotidePosition); 
+    })
+
+    // Update the pre-add data with their updated positions
+    await nucleotidePairData.create(allData)
+
     res.redirect(`/`)
 })
 
@@ -120,10 +169,20 @@ app.delete(`/:dataPointId`, async (req, res) => { // DELETE request
 
 app.get(`/:dataPointId`, async (req, res) => { // GET request for show route
     const allData = await nucleotidePairData.find()
-    const foundDataPoint = await nucleotidePairData.findById(req.params.dataPointId)
+    const foundDataPoint = await nucleotidePairData.findById(req.params.dataPointId) // still necessary?
+
+    let maxPosition = 0
+    for (const pair of allData) {
+        if (pair.nucleotidePosition > maxPosition) {
+            maxPosition = pair.nucleotidePosition;
+        }
+    }
+    console.log(`maxPosition`, maxPosition);
+
     res.render(`show.ejs` , {
         dataPoint: foundDataPoint,
         dataPoints: allData,
+        maxPosition: maxPosition
 
     })
 })
