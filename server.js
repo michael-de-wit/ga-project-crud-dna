@@ -37,18 +37,20 @@ app.post(`/`, async (req, res) => { // POST request to the fruits new route (i.e
     // Re-cast data type for checkbox on->true, null->false to expected DB boolean data type
     if(req.body.nucleotideMatch === 'on') {
         req.body.nucleotideMatch = true;
+    // Check for if the Matching? checkbox is unchecked, but the nucleotides still match
     } else if ((req.body.templateNucleotide === "G" && req.body.codingNucleotide === "C") ||
                (req.body.templateNucleotide === "C" && req.body.codingNucleotide === "G") ||
                (req.body.templateNucleotide === "A" && req.body.codingNucleotide === "T") ||
                (req.body.templateNucleotide === "T" && req.body.codingNucleotide === "A")
             ) {
         req.body.nucleotideMatch = true;
+    // i.e. the Matching? checkbox is unchecked and the nucleotides do in fact not match
     } else {
         req.body.nucleotideMatch = false;
     }
 
     // Add date added time stamp to new entry
-    req.body.dateAdded =Date()
+    req.body.dateAdded = Date()
 
     // Check for overlapping position values, i.e. an inserted entry
     // Save the added nucleotide pair position, i.e. the position to insert the pair into
@@ -158,7 +160,7 @@ app.put(`/:dataPointId`, async (req, res) => { // need a form for a put request
     allData.sort((entry1, entry2) => entry1.nucleotidePosition - entry2.nucleotidePosition)
     console.log(`post allData`, allData);
 
-    // Check for gaps in positioning and re-orient
+    // Re-number the positions in order
     allData.forEach((entry, index) => {
         console.log('pre entry.nucleotidePosition', entry.nucleotidePosition);
         entry.nucleotidePosition = index + 1
@@ -173,6 +175,19 @@ app.put(`/:dataPointId`, async (req, res) => { // need a form for a put request
 
 app.delete(`/:dataPointId`, async (req, res) => { // DELETE request
     await nucleotidePairData.findByIdAndDelete(req.params.dataPointId)
+
+    allData = await nucleotidePairData.find()
+
+    // Re-number the positions in order
+    allData.forEach((entry, index) => {
+        console.log('pre entry.nucleotidePosition', entry.nucleotidePosition);
+        entry.nucleotidePosition = index + 1
+        console.log('post entry.nucleotidePosition', entry.nucleotidePosition); 
+    })
+
+    // Update the pre-add data with their updated positions
+    await nucleotidePairData.create(allData)
+
     res.redirect(`/`)
 
 })
