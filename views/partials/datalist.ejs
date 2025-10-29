@@ -12,7 +12,16 @@
                     <% } else { %>
                         - Mismatch
                     <% } %>
-                    - <%= dataPoint.dateAdded %>
+                    - Added: 
+                        <%= dataPoint.dateAdded.getMonth() + 1 %>-<%= dataPoint.dateAdded.getDate() %>
+                        <%= dataPoint.dateAdded.getHours() %>:<%= dataPoint.dateAdded.getMinutes().toString().padStart(2,`0`) %> <!-- padStart converts e.g. '2'->'02'; needs to be in string format -->
+                    <% if(!isNaN(dataPoint.dateModified)) {%>
+                        - Modified:
+                            <%= dataPoint.dateModified.getMonth() + 1 %>-<%= dataPoint.dateModified.getDate() %>
+                        <%= dataPoint.dateModified.getHours() %>:<%= dataPoint.dateModified.getMinutes().toString().padStart(2,`0`) %> <!-- padStart converts e.g. '2'->'02'; needs to be in string format -->
+                    <% } else { %>
+                        - Unmodified
+                    <% } %>
                 </a>
             </li>
         <% } %>

@@ -105,6 +105,9 @@ app.get(`/new`, async (req, res) => {
 })
 
 app.put(`/:dataPointId`, async (req, res) => { // need a form for a put request
+
+    req.body.dateModified =Date()
+
     await nucleotidePairData.findByIdAndUpdate(req.params.dataPointId, req.body)
     res.redirect(`/`)
 })

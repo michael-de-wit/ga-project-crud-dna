@@ -6,7 +6,8 @@ const nucleotidePairsSchema = new mongoose.Schema({
     templateNucleotide: String,
     codingNucleotide: String,
     nucleotideMatch: Boolean,
-    dateAdded: Date
+    dateAdded: Date,
+    dateModified: Date
 
 })
 
