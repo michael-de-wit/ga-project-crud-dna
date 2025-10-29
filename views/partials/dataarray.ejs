@@ -2,9 +2,9 @@
     <p> [
     <% for (const [index, dataPoint] of dataPoints.entries()) { %> <!-- Loop through dataPoints to clean up the object format -->
         <% if(index + 1 != dataPoints.length) { %> <!-- Add a comma after each object unless it's the last object -->
-           {"templateNucleotide": "<%= dataPoint.templateNucleotide %>", "codingNucleotide": "<%= dataPoint.codingNucleotide %>"},
+           {"nucleotidePosition": <%= dataPoint.nucleotidePosition %>, "templateNucleotide": "<%= dataPoint.templateNucleotide %>", "codingNucleotide": "<%= dataPoint.codingNucleotide %>", "nucleotideMatch": <%= dataPoint.nucleotideMatch %>},
         <% } else { %> <!-- This should only apply to the last object -- excludes the comma afterwards -->
-           {"templateNucleotide": "<%= dataPoint.templateNucleotide %>", "codingNucleotide": "<%= dataPoint.codingNucleotide %>"}
+           {"nucleotidePosition": <%= dataPoint.nucleotidePosition %>,"templateNucleotide": "<%= dataPoint.templateNucleotide %>", "codingNucleotide": "<%= dataPoint.codingNucleotide %>"}
         <% } %>
     <% } %>
         ]

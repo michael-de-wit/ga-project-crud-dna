@@ -3,7 +3,13 @@
         <% for (const [index, dataPoint] of dataPoints.entries()) { %>
             <li> 
                 <a href="/<%= dataPoint._id %>">
+                    <%= dataPoint.nucleotidePosition %>. 
                     <%= dataPoint.templateNucleotide %>:<%= dataPoint.codingNucleotide %>
+                    <% if(dataPoint.nucleotideMatch === true) { %>
+                        - Match
+                    <% } else { %>
+                        - Mismatch
+                    <% } %>
                 </a>
             </li>
         <% } %>
