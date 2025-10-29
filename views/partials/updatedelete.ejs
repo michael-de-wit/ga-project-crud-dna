@@ -1,10 +1,79 @@
 <form action="/<%= dataPoint._id %>?_method=PUT" method="POST">
+
+    <label> Nucleotide position:</label>
+    <input name="nucleotidePosition" type="Number" value="<%= dataPoint.nucleotidePosition %>"/>
+
     <label>Template nucleotide:</label>
-    <input name="templateNucleotide" type="text" value="<%= dataPoint.templateNucleotide %>"/>
+    <fieldset id="templateNucleotideFieldSet">
+
+        <% if(dataPoint.templateNucleotide === "G") { %>
+            <input id="templateNucleotideG" class="templateNucleotide" name="templateNucleotide" type="radio" value="G" checked/>
+        <% } else { %>
+            <input id="templateNucleotideG" class="templateNucleotide" name="templateNucleotide" type="radio" value="G"/>
+        <% } %>
+        <label for="templateNucleotideG">G</label>
+        
+        <% if(dataPoint.templateNucleotide === "C") { %>
+            <input id="templateNucleotideC" class="templateNucleotide" name="templateNucleotide" type="radio" value="C" checked/>
+        <% } else { %>
+            <input id="templateNucleotideC" class="templateNucleotide" name="templateNucleotide" type="radio" value="C"/>
+        <% } %>
+        <label for="templateNucleotideC">C</label>
+        
+        <% if(dataPoint.templateNucleotide === "A") { %>
+            <input id="templateNucleotideA" class="templateNucleotide" name="templateNucleotide" type="radio" value="A" checked/>
+        <% } else { %>
+            <input id="templateNucleotideA" class="templateNucleotide" name="templateNucleotide" type="radio" value="A"/>
+        <% } %>
+        <label for="templateNucleotideA">A</label>
+        
+        <% if(dataPoint.templateNucleotide === "T") { %>
+            <input id="templateNucleotideT" class="templateNucleotide" name="templateNucleotide" type="radio" value="T" checked/>
+        <% } else { %>
+            <input id="templateNucleotideT" class="templateNucleotide" name="templateNucleotide" type="radio" value="T"/>
+        <% } %>
+        <label for="templateNucleotideT">T</label>
+    </fieldset>
+
     <label>Coding nucleotide:</label>
-    <input name="codingNucleotide" type="text" value="<%= dataPoint.codingNucleotide %>"/>
+        <fieldset id="codingNucleotideFieldSet">
+
+        <% if(dataPoint.codingNucleotide === "G") { %>
+            <input id="codingNucleotideG" class="codingNucleotide" name="codingNucleotide" type="radio" value="G" checked/>
+        <% } else { %>
+            <input id="codingNucleotideG" class="codingNucleotide" name="codingNucleotide" type="radio" value="G"/>
+        <% } %>
+        <label for="codingNucleotideG">G</label>
+        
+        <% if(dataPoint.codingNucleotide === "C") { %>
+            <input id="codingNucleotideC" class="codingNucleotide" name="codingNucleotide" type="radio" value="C" checked/>
+        <% } else { %>
+            <input id="codingNucleotideC" class="codingNucleotide" name="codingNucleotide" type="radio" value="C"/>
+        <% } %>
+        <label for="codingNucleotideC">C</label>
+        
+        <% if(dataPoint.codingNucleotide === "A") { %>
+            <input id="codingNucleotideA" class="codingNucleotide" name="codingNucleotide" type="radio" value="A" checked/>
+        <% } else { %>
+            <input id="codingNucleotideA" class="codingNucleotide" name="codingNucleotide" type="radio" value="A"/>
+        <% } %>
+        <label for="codingNucleotideA">A</label>
+        
+        <% if(dataPoint.codingNucleotide === "T") { %>
+            <input id="codingNucleotideT" class="codingNucleotide" name="codingNucleotide" type="radio" value="T" checked/>
+        <% } else { %>
+            <input id="codingNucleotideT" class="codingNucleotide" name="codingNucleotide" type="radio" value="T"/>
+        <% } %>
+        <label for="codingNucleotideT">T</label>
+    </fieldset>
+
+
+
+    <!-- <input name="codingNucleotide" type="text" value="<%= dataPoint.codingNucleotide %>"/> -->
+
     <button type="submit">Update</button>
 </form>
+
 <form action="/<%= dataPoint._id %>?_method=DELETE" method="POST">
     <button type="submit">Delete</button>
 </form>

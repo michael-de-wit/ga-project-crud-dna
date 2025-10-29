@@ -5,7 +5,7 @@ const dataDots = JSON.parse(dataArrayForLollipop3dAsString);
 
 // Sorts dataDots by nucleotidePosition using array's sort method -- so that the graphic will render in order of nucleotide position
 dataDots.sort((entry1, entry2) => entry1.nucleotidePosition - entry2.nucleotidePosition);
-// console.log(`post-sort`, dataDots);
+console.log(`post-sort`, dataDots);
 
 // Select the A-Frame scene
 let scene = d3.select("a-scene")
@@ -39,6 +39,7 @@ scene.append("a-entity")
 scene.append("a-entity")
     .attr("line","start: 0 1 -1; end: 0 1 -6; color: blue")
 
+// Template nucleotides
 scene.selectAll("a-sphere.starting")
     .data(dataDots)
     .enter()
@@ -76,6 +77,7 @@ scene.selectAll("a-sphere.starting")
         
     });
 
+// Coding nucleotides
 scene.selectAll("a-sphere.ending")
     .data(dataDots)
     .enter()
@@ -103,13 +105,13 @@ scene.selectAll("a-sphere.ending")
             
         })
     .attr("color", function(d, i) {
-        if (d.templateNucleotide === 'G') {
+        if (d.codingNucleotide === 'G') {
             return "#587156"
-        } else if (d.templateNucleotide === 'C') {
+        } else if (d.codingNucleotide === 'C') {
             return "#B62E3B"
-        } else if (d.templateNucleotide === 'A') {
+        } else if (d.codingNucleotide === 'A') {
             return "#AFA77B"
-        } else if (d.templateNucleotide === 'T') {
+        } else if (d.codingNucleotide === 'T') {
             return "#EAC6E6"
         }
     });
