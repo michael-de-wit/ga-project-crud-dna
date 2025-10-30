@@ -1,11 +1,17 @@
+<!-- Update + delete functionality -->
+
+<!-- Update form -->
 <form action="/<%= dataPoint._id %>?_method=PUT" method="POST">
 
+    <!-- Position update -->
     <label> Nucleotide position:</label>
-    <input name="nucleotidePosition" type="Number" value="<%= dataPoint.nucleotidePosition %>" max="<%= maxPosition + 1 %>"/>
+     <input name="nucleotidePosition" type="Number" value="<%= dataPoint.nucleotidePosition %>" max="<%= maxPosition + 1 %>"/>  <!-- Do let the user choose a Position beyond 1 plus the max existing Position -->
 
+    <!-- Updata form set-up for the Template nucleotide -->
     <label>Template nucleotide:</label>
     <fieldset id="templateNucleotideFieldSet">
 
+        <!-- Check the G radio button if the selection is a G Template nucleotide -->
         <% if(dataPoint.templateNucleotide === "G") { %>
             <input id="templateNucleotideG" class="templateNucleotide" name="templateNucleotide" type="radio" value="G" checked/>
         <% } else { %>
@@ -13,6 +19,7 @@
         <% } %>
         <label for="templateNucleotideG">G</label>
         
+        <!-- Check the C radio button if the selection is a C Template nucleotide -->
         <% if(dataPoint.templateNucleotide === "C") { %>
             <input id="templateNucleotideC" class="templateNucleotide" name="templateNucleotide" type="radio" value="C" checked/>
         <% } else { %>
@@ -20,6 +27,7 @@
         <% } %>
         <label for="templateNucleotideC">C</label>
         
+        <!-- Check the A radio button if the selection is a A Template nucleotide -->
         <% if(dataPoint.templateNucleotide === "A") { %>
             <input id="templateNucleotideA" class="templateNucleotide" name="templateNucleotide" type="radio" value="A" checked/>
         <% } else { %>
@@ -27,6 +35,7 @@
         <% } %>
         <label for="templateNucleotideA">A</label>
         
+        <!-- Check the T radio button if the selection is a T Template nucleotide -->
         <% if(dataPoint.templateNucleotide === "T") { %>
             <input id="templateNucleotideT" class="templateNucleotide" name="templateNucleotide" type="radio" value="T" checked/>
         <% } else { %>
@@ -35,9 +44,12 @@
         <label for="templateNucleotideT">T</label>
     </fieldset>
 
+
+    <!-- Update form set-up for the Coding nucleotide -->
     <label>Coding nucleotide:</label>
         <fieldset id="codingNucleotideFieldSet">
 
+        <!-- Check the G radio button if the selection is a G Coding nucleotide -->
         <% if(dataPoint.codingNucleotide === "G") { %>
             <input id="codingNucleotideG" class="codingNucleotide" name="codingNucleotide" type="radio" value="G" checked/>
         <% } else { %>
@@ -45,6 +57,7 @@
         <% } %>
         <label for="codingNucleotideG">G</label>
         
+        <!-- Check the C radio button if the selection is a C Coding nucleotide -->
         <% if(dataPoint.codingNucleotide === "C") { %>
             <input id="codingNucleotideC" class="codingNucleotide" name="codingNucleotide" type="radio" value="C" checked/>
         <% } else { %>
@@ -52,6 +65,7 @@
         <% } %>
         <label for="codingNucleotideC">C</label>
         
+        <!-- Check the A radio button if the selection is a A Coding nucleotide -->
         <% if(dataPoint.codingNucleotide === "A") { %>
             <input id="codingNucleotideA" class="codingNucleotide" name="codingNucleotide" type="radio" value="A" checked/>
         <% } else { %>
@@ -59,6 +73,7 @@
         <% } %>
         <label for="codingNucleotideA">A</label>
         
+        <!-- Check the T radio button if the selection is a T Coding nucleotide -->
         <% if(dataPoint.codingNucleotide === "T") { %>
             <input id="codingNucleotideT" class="codingNucleotide" name="codingNucleotide" type="radio" value="T" checked/>
         <% } else { %>
@@ -67,13 +82,10 @@
         <label for="codingNucleotideT">T</label>
     </fieldset>
 
-
-
-    <!-- <input name="codingNucleotide" type="text" value="<%= dataPoint.codingNucleotide %>"/> -->
-
     <button type="submit">Update</button>
 </form>
 
+<!-- Delete functionality -->
 <form action="/<%= dataPoint._id %>?_method=DELETE" method="POST">
     <button type="submit">Delete</button>
 </form>

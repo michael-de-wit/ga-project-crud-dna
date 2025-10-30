@@ -1,3 +1,5 @@
+// Primarily deals with data validation
+
 const nucleotideMatchCheckbox = document.querySelector(`#nucleotideMatchCheckbox`) // Get the Nucleotide match? element
 const templateNucleotide = document.querySelectorAll(`.templateNucleotide`) // Get the Template nucleotide element
 const codingNucleotide = document.querySelectorAll(`.codingNucleotide`) // Get the Coding nucleotide element
@@ -7,7 +9,9 @@ let RadioCodingNucleotideC = document.querySelector('input[id="codingNucleotideC
 let RadioCodingNucleotideA = document.querySelector('input[id="codingNucleotideA"]'); // The Coding nucleotide element with A selected
 let RadioCodingNucleotideT = document.querySelector('input[id="codingNucleotideT"]'); // The Coding nucleotide element with T selected
 
+
 if (nucleotideMatchCheckbox !== null) { // Since the html header is shared by all pages, this file is called from all pages; not all pages have the same elements; this checks to see if the element(s) are available, e.g. the Match checkbox
+    
     //If the user checks Nucleotide match?, then update the Coding nucleotide to match the selected Template nucleotide
     nucleotideMatchCheckbox.addEventListener('change', () => { // When the user selects/deselects the Nucleotide match? checkbox
         const selectedRadioTemplateNucleotide = document.querySelector('input[name="templateNucleotide"]:checked'); // Get the Template nucleotide radio button that is currently selected
