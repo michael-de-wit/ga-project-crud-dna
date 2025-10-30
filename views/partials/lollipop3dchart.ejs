@@ -1,9 +1,13 @@
-<a-scene id="3d-scatter-plot" embedded>
+<!-- <a-scene id="3d-scatter-plot" embedded> -->
+    <a-scene id="3d-scatter-plot"
+      vr-mode-ui="enabled: false"
+      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
     <!-- Camera set up from: https://claude.ai/chat/1ca4def1-b7d7-4ea6-b109-4e75ed1de386 -->
     <a-entity id="rig" movement-controls="fly: true">
         <a-entity camera position="2 2 1.5" look-controls wasd-controls="acceleration: 20" rotation="-90 90 -180"></a-entity>
     </a-entity>
-    <a-sky color="#ECECEC"></a-sky>></a-sky>
+    <!-- <a-sky color="#ECECEC"></a-sky>></a-sky> -->
+     <a-camera  rotation-reader> </a-camera>
 </a-scene>
 
 <script defer src="/lollipop3dchart.js"></script>
