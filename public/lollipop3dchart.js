@@ -37,18 +37,20 @@ scene.append("a-entity")
     .attr("line","start: 0 1 -1; end: 0 6 -1; color: green")
 
 scene.append("a-entity")
-    .attr("line","start: 0 1 -1; end: 0 1 -6; color: blue")
+.attr("line","start: 0 1 -1; end: 0 1 -6; color: blue")
 
 // Template nucleotides
-scene.selectAll("a-sphere.starting")
+templateNucleotideSpheres = scene.selectAll("a-sphere.starting")
     .data(dataDots)
     .enter()
     .append("a-sphere")
+    // .attr("radius", 0.1) // Set a fixed radius for each sphere
+    // .transition()
+    // .duration(2000)
     .attr("radius", 0.2) // Set a fixed radius for each sphere
-    // .attr("position", "0 1 -1")
     .attr('position', function(d, i) {
-            let x1PosOffset = i * 45
-            let x1ConvertedAngleToRadians = x1PosOffset * (Math.PI / 180);
+        let x1PosOffset = i * 45
+        let x1ConvertedAngleToRadians = x1PosOffset * (Math.PI / 180);
             let x1Sine = Math.cos(x1ConvertedAngleToRadians)
             let xPos1 = -10 * x1Sine
             let x1 = x_scale(xPos1);
@@ -74,8 +76,30 @@ scene.selectAll("a-sphere.starting")
         } else if (d.templateNucleotide === 'T') {
             return "#EAC6E6"
         }
-        
-    });
+    })
+    // .on('click',contractTemplate)
+
+// function expandTemplate() {
+//     templateNucleotideSpheres
+//         .transition()
+//         .duration(2000)
+//         .attr("radius", 0.1) // Set a fixed radius for each sphere
+//         .transition()
+//         .duration(2000)
+//         .attr("radius", 0.3) // Set a fixed radius for each sphere
+//         .on('end',contractTemplate)
+// }
+
+// function contractTemplate() {
+//     templateNucleotideSpheres
+//         .transition()
+//         .duration(2000)
+//         .attr("radius", 0.2) // Set a fixed radius for each sphere
+//         .transition()
+//         .duration(2000)
+//         .attr("radius", 0.0) // Set a fixed radius for each sphere
+//         .on('end',expandTemplate)
+// }
 
 // Coding nucleotides
 scene.selectAll("a-sphere.ending")
