@@ -1,10 +1,11 @@
+<!-- Logic for the list of added nucleotides -->
 <div>
     <ul>
-    <% // Sorts dataDots by nucleotidePosition using array's sort method -- so that the graphic will render in order of nucleotide position %>
+    <% // Sorts dataDots by nucleotidePosition using array's sort method -- so that the graphic will render in order of nucleotide position - just in case it wasn't handled in server.js %>
     <% dataPoints.sort((entry1, entry2) => entry1.nucleotidePosition - entry2.nucleotidePosition); %>
-        <% for (const [index, dataPoint] of dataPoints.entries()) { %>
+        <% for (const [index, dataPoint] of dataPoints.entries()) { %> <!-- Loop through each of the data point -->
             <li> 
-                <a href="/<%= dataPoint._id %>">
+                <a href="/<%= dataPoint._id %>"> <!-- Link to the pair's respective show page -->
                     <%= dataPoint.nucleotidePosition %>. 
                     <%= dataPoint.templateNucleotide %>:<%= dataPoint.codingNucleotide %>
                     <% if(dataPoint.nucleotideMatch === true) { %>
@@ -15,10 +16,10 @@
                     - Added: 
                         <%= dataPoint.dateAdded.getMonth() + 1 %>-<%= dataPoint.dateAdded.getDate() %>
                         <%= dataPoint.dateAdded.getHours() %>:<%= dataPoint.dateAdded.getMinutes().toString().padStart(2,`0`) %> <!-- padStart converts e.g. '2'->'02'; needs to be in string format -->
-                    <% if(!isNaN(dataPoint.dateModified)) {%>
+                    <% if(!isNaN(dataPoint.dateModified)) {%> <!-- checks if there's a valid modified date; only modified entries have this value -->
                         - Modified:
                             <%= dataPoint.dateModified.getMonth() + 1 %>-<%= dataPoint.dateModified.getDate() %>
-                        <%= dataPoint.dateModified.getHours() %>:<%= dataPoint.dateModified.getMinutes().toString().padStart(2,`0`) %> <!-- padStart converts e.g. '2'->'02'; needs to be in string format -->
+                            <%= dataPoint.dateModified.getHours() %>:<%= dataPoint.dateModified.getMinutes().toString().padStart(2,`0`) %> <!-- padStart converts e.g. '2'->'02'; needs to be in string format -->
                     <% } else { %>
                         - Unmodified
                     <% } %>
