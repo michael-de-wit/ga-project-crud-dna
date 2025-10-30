@@ -21,10 +21,14 @@ app.use(express.urlencoded({ extended: false })); // to expect user input data f
 const path = require('path'); // To set up the public folder
 app.use(express.static('public')); // To set up the public folder
 
+
 // MongoDB document schema for MDW-GA-Project > mdw-ga-project-cluster0 > gacruddna > nucleotidepairdatas
 const nucleotidePairData = require(`./models/nucleotide.js`) // use this MongoDB schema
 
+
 // Connections
+
+// GET all the data for the '/' route
 app.get (`/`, async (req, res) => { // GET request for the index route
     const allData = await nucleotidePairData.find()
     
@@ -33,39 +37,44 @@ app.get (`/`, async (req, res) => { // GET request for the index route
     })
 })
 
-app.post(`/`, async (req, res) => { // POST request to the fruits new route (i.e. not a get request)
-    console.log(`req.body`, req.body);
-    // Re-cast data type for checkbox on->true, null->false to expected DB boolean data type
+// POST new entries to the '/' route
+app.post(`/`, async (req, res) => { // POST request to the '/' route
+    // console.log(`req.body`, req.body);
+
+    // Re-cast data type for checkbox on->true, null->false to expected DB boolean data type; frontendbehavior.js data validation ensures that nucleotideMatch = true when the checkbox is checked 
     if(req.body.nucleotideMatch === 'on') {
         req.body.nucleotideMatch = true;
-    // Check for if the Matching? checkbox is unchecked, but the nucleotides still match
+
+    // Check for if the Matching? checkbox is unchecked, but the nucleotides still match -> nucleotideMatch = true
     } else if ((req.body.templateNucleotide === "G" && req.body.codingNucleotide === "C") ||
                (req.body.templateNucleotide === "C" && req.body.codingNucleotide === "G") ||
                (req.body.templateNucleotide === "A" && req.body.codingNucleotide === "T") ||
                (req.body.templateNucleotide === "T" && req.body.codingNucleotide === "A")
             ) {
         req.body.nucleotideMatch = true;
-    // i.e. the Matching? checkbox is unchecked and the nucleotides do in fact not match
+
+    // i.e. the Matching? checkbox is unchecked and the nucleotides do in fact not match -> only scenario to set nucleotideMatch = false
     } else {
         req.body.nucleotideMatch = false;
     }
 
-    // Add date added time stamp to new entry
+    // Add Date Added time stamp to new entry
     req.body.dateAdded = Date()
+
 
     // Check for overlapping position values, i.e. an inserted entry
     // Save the added nucleotide pair position, i.e. the position to insert the pair into
     const addedNucleotidePosition = Number(req.body.nucleotidePosition)
     // console.log(addedNucleotidePosition);
     
-    // Get all the data prior to the new entry being added
+    // Get all the data prior to the new entry being added - for comparisons
     const allData = await nucleotidePairData.find()
 
     // Get all the positions from the data prior to the new entry being added
     const preAddAllDataPositionArray = allData.map(entry => entry.nucleotidePosition)
     // console.log(preAddAllDataPositionArray); 
 
-    // Check to see if the added position / insert position already exists; i.e. if there is an overlapping position
+    // Check if the added position / insert position already exists; i.e. if there is an overlapping position
     if(preAddAllDataPositionArray.includes(addedNucleotidePosition)) {
         console.log(`Overlap position found`);
         // If the inserted position overlaps with an existing position, increment the pre-existing overlapping position and all subsequent positions by 1 to make space for the inserted position
@@ -80,7 +89,7 @@ app.post(`/`, async (req, res) => { // POST request to the fruits new route (i.e
             }
             // console.log(`post incr entry.nucleotidePosition, ${entry.nucleotidePosition}`);
         })
-    } else {
+    } else { // No overlapping positions; suggests that the pair was added to the end / appended
         console.log(`No overlap position found`);
     }
     
@@ -90,17 +99,19 @@ app.post(`/`, async (req, res) => { // POST request to the fruits new route (i.e
     // Add the new entry with its insert position
     await nucleotidePairData.create(req.body)
 
-    res.redirect(`/`) // redirect to the GET fruits index route after the post fruits processing has run
+    res.redirect(`/`) // redirect to the '/'' route
     
 })
 
+// GET data for the '/new' route
 app.get(`/new`, async (req, res) => {
     const allData = await nucleotidePairData.find()
 
     // console.log(allData);
 
-    // Determine the max nucleotide position out of all the pairs
+    // Determine the max nucleotide position out of all the pairs; to pre-populate the Position field with the appending Position (i.e. not an inserting position)
     let maxPosition = 0
+    // Run through the positions of all the data and save the max position value
     for (const pair of allData) {
         if (pair.nucleotidePosition > maxPosition) {
             maxPosition = pair.nucleotidePosition;
@@ -113,9 +124,10 @@ app.get(`/new`, async (req, res) => {
     })
 })
 
+// PUT updates for the '/:dataPointId' route
 app.put(`/:dataPointId`, async (req, res) => { // need a form for a put request
 
-    // Create data modified timestamp to updated entry
+    // Create Data Modified timestamp for updated entry
     req.body.dateModified = Date()
 
     // Check for overlapping position values, i.e. an inserted entry
@@ -127,12 +139,12 @@ app.put(`/:dataPointId`, async (req, res) => { // need a form for a put request
     let allData = await nucleotidePairData.find()
     // console.log(`1 allData`, allData); 
 
-    // Get all the positions from the data prior to the new entry being added
-    const preModifyAllDataPositionArray = allData.map(entry => entry.nucleotidePosition)
+    // Get all the Positions from the data prior to the new entry being added; to compare against the updated Position (is it an insert?)
+    const preModifyAllDataPositionArray = allData.map(entry => entry.nucleotidePosition) // Creates an array only of existing nucleotide pair positions
     // console.log(`2 preModifyAllDataPositionArray`, preModifyAllDataPositionArray); 
 
     // Check to see if the updated position already exists; i.e. if there is an overlapping position
-    if(preModifyAllDataPositionArray.includes(modifiedNucleotidePosition)) {
+    if(preModifyAllDataPositionArray.includes(modifiedNucleotidePosition)) { // Does the existing pair position array include the updated position? i.e. is the user trying to insert the updated pair (vs. appending it)?
         console.log(`Overlap position found`);
         // If the inserted position overlaps with an existing position, increment the pre-existing overlapping position and all subsequent positions by 1 to make space for the inserted position
         // e.g. If we already have entries for Positions 1,2,3,4 and we want to insert an entry into position 2; the old positions update like: 1, 2+1, 3+1, 4+1
@@ -146,64 +158,70 @@ app.put(`/:dataPointId`, async (req, res) => { // need a form for a put request
             }
             // console.log(`post incr entry.nucleotidePosition, ${entry.nucleotidePosition}`);
         })
-    } else {
+    } else { // No overlapping positions; suggests that the pair was added to the end / appended
         console.log(`No overlap position found`);
     }
 
-    await nucleotidePairData.create(allData)
+    await nucleotidePairData.create(allData) // Re-save the pre-existing pairs but with their updated Positions
     
-    await nucleotidePairData.findByIdAndUpdate(req.params.dataPointId, req.body)
+    await nucleotidePairData.findByIdAndUpdate(req.params.dataPointId, req.body) // Updated the modified pair
 
-    allData = await nucleotidePairData.find()
+    // Re-order the Positions just in case + if an existing pair was inserted into a higher Position, the above logic yields a gap in Position numbers, however the Order is as expected; so re-numbering the Positions eliminates gaps in Position values
+    allData = await nucleotidePairData.find() // Get the consolidate data
 
     //Re-sort the entries by position (may still have a gap)
-    console.log(`pre allData`, allData);
-    allData.sort((entry1, entry2) => entry1.nucleotidePosition - entry2.nucleotidePosition)
-    console.log(`post allData`, allData);
+    // console.log(`pre allData`, allData);
+    allData.sort((entry1, entry2) => entry1.nucleotidePosition - entry2.nucleotidePosition) // Sorts the array in ascending order of nucleotide Position
+    // console.log(`post allData`, allData);
 
-    // Re-number the positions in order
+    // Re-number the Positions in Order (i.e. handles Position gaps; e.g. 1,2,4,5 -> 1,2,3,4)
     allData.forEach((entry, index) => {
-        console.log('pre entry.nucleotidePosition', entry.nucleotidePosition);
+        // console.log('pre entry.nucleotidePosition', entry.nucleotidePosition);
         entry.nucleotidePosition = index + 1
-        console.log('post entry.nucleotidePosition', entry.nucleotidePosition); 
+        // console.log('post entry.nucleotidePosition', entry.nucleotidePosition); 
     })
 
-    // Update the pre-add data with their updated positions
+    // Update the data with their updated, no-gap Positions
     await nucleotidePairData.create(allData)
 
     res.redirect(`/`)
 })
 
+// DELETE request for the `/:dataPointId` route 
 app.delete(`/:dataPointId`, async (req, res) => { // DELETE request
-    await nucleotidePairData.findByIdAndDelete(req.params.dataPointId)
+    await nucleotidePairData.findByIdAndDelete(req.params.dataPointId) // Delete the nucleotide pair
 
+    // GET all the resulting data to update the Position values; deleting an entry creates a Position gap
     allData = await nucleotidePairData.find()
 
     // Re-number the positions in order
     allData.forEach((entry, index) => {
-        console.log('pre entry.nucleotidePosition', entry.nucleotidePosition);
+        // console.log('pre entry.nucleotidePosition', entry.nucleotidePosition);
         entry.nucleotidePosition = index + 1
-        console.log('post entry.nucleotidePosition', entry.nucleotidePosition); 
+        // console.log('post entry.nucleotidePosition', entry.nucleotidePosition); 
     })
 
-    // Update the pre-add data with their updated positions
+    // Update the data with their updated, no-gap Positions
     await nucleotidePairData.create(allData)
 
     res.redirect(`/`)
 
 })
 
+// GET request for the `/:dataPointId` route 
 app.get(`/:dataPointId`, async (req, res) => { // GET request for show route
     const allData = await nucleotidePairData.find()
-    const foundDataPoint = await nucleotidePairData.findById(req.params.dataPointId) // still necessary?
+    const foundDataPoint = await nucleotidePairData.findById(req.params.dataPointId) // Isolates the individual nucleotide pair to view; for pre-populating the forms with correct data
 
+    // Determine the max Position; to make sure that the user cannot set a Position higher than 1 plus the max Position
     let maxPosition = 0
+    // Run through the Positions of all the data and save the max position value
     for (const pair of allData) {
         if (pair.nucleotidePosition > maxPosition) {
             maxPosition = pair.nucleotidePosition;
         }
     }
-    console.log(`maxPosition`, maxPosition);
+    // console.log(`maxPosition`, maxPosition);
 
     res.render(`show.ejs` , {
         dataPoint: foundDataPoint,
