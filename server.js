@@ -6,21 +6,22 @@ const express = require(`express`) // in order to use Express
 const app = express() // in order to use Express
 
 const { default: mongoose } = require('mongoose'); // in order to use mongoose to connect with MongoDB
-mongoose.connect(process.env.MONGODB_URI) // connect to MongoDBusing the info in .env
+mongoose.connect(process.env.MONGODB_URI) // connect to MongoDB using the info in .env
 mongoose.connection.on(`connected`, () => { // connect to MongoDB
     console.log(`Connected to MongoDB ${mongoose.connection.name}`);
 })
 const methodOverride = require(`method-override`) // to make DELETE, PUT requests work
+app.use(methodOverride(`_method`)) // to make DELETE, PUT requests work
+
 // const morgan = require(`morgan`) // for HTML request info in the console
 
-app.use(express.urlencoded({ extended: false })); // expect user input data from forms
-app.use(methodOverride(`_method`)) // to make DELETE, PUT requests work
+app.use(express.urlencoded({ extended: false })); // to expect user input data from forms
 // app.use(morgan(`dev`)) // for HTML request info in the console
 
-const path = require('path'); // Set up public folder
-app.use(express.static('public'));
+const path = require('path'); // To set up the public folder
+app.use(express.static('public')); // To set up the public folder
 
-// Schema
+// MongoDB document schema for MDW-GA-Project > mdw-ga-project-cluster0 > gacruddna > nucleotidepairdatas
 const nucleotidePairData = require(`./models/nucleotide.js`) // use this MongoDB schema
 
 // Connections
