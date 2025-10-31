@@ -1,4 +1,16 @@
+body {
+    background-color: white;
+}
+
+h1 {
+    font-size: 0.5rem;
+    color: lightgrey;
+    background-color: #2f302e;
+    padding: 1rem;
+}
+
 a-scene {
-    height: 200px;
+    height: 400px;
     width: 460px;
 }
+

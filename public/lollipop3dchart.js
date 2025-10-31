@@ -50,6 +50,7 @@ templateNucleotideSpheres = scene.selectAll("a-sphere.starting")
     .enter()
     .append("a-sphere") // Use the a-sphere A-frame primitive
     .attr("radius", 0.2) // Set a fixed radius for each sphere
+    .attr("roughness","5")
     .attr('position', function(d, i) { // Set the xyz position for the sphere
         let x1PosOffset = i * 45 // To set the X position corresponding to a 45 degree movement around a circle; increase each sphere by 45 degs
         let x1ConvertedAngleToRadians = x1PosOffset * (Math.PI / 180); // Convert the degrees around the circle to radians for the sin/cos calculation
@@ -86,7 +87,7 @@ scene.selectAll("a-sphere.ending")
     .enter()
     .append("a-sphere") // Use the a-sphere A-frame primitive
     .attr("radius", 0.2) // Set a fixed radius for each sphere
-    // .attr("position", "0 1 -1")
+    .attr("roughness","5")
     .attr('position', function(d, i) { // Set the xyz position for the sphere
 
             let x2PosOffset = i * 45 // To set the X position corresponding to a 45 degree movement around a circle; increase each sphere by 45 degs
